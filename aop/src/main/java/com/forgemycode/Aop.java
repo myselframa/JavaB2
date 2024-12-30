@@ -25,7 +25,7 @@ public class Aop {
             Song song = new Song();
             song.setTitle("Blank Space");
             song.setSingerName("Taylor Swift");
-            boolean vehicleStarted = true;
+            boolean vehicleStarted = false;
             String moveVehicleStatus = vehicleServices.moveVehicle(vehicleStarted);
             //System.out.println(moveVehicleStatus);
             String playMusicStatus = vehicleServices.playMusic(vehicleStarted,song);
