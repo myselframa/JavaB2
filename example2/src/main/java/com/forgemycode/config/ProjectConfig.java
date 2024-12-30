@@ -1,7 +1,10 @@
 package com.forgemycode.config;
 
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 import com.forgemycode.beans.Vehicle;
 
@@ -21,6 +24,7 @@ public class ProjectConfig {
     value to the context.
     * */
     @Bean
+
     Vehicle vehicle1() {
         var veh = new Vehicle();
         veh.setName("Audi");

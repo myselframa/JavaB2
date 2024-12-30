@@ -1,5 +1,9 @@
 package com.forgemycode.beans;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+
+ 
 public class Vehicle {
 	
 	private String name;

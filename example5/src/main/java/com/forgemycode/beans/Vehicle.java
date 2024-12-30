@@ -2,6 +2,7 @@ package com.forgemycode.beans;
 
 import org.springframework.stereotype.Component;
 
+
 @Component
 public class Vehicle {
 	
