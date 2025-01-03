@@ -1,0 +1,26 @@
+my:
+  info:
+    product:
+      code: xyz
+      id: 999
+      model: N
+      type: false
+  prod:
+    ID: 999
+    MOD-E_L: p
+    Ty_pe: true
+    co-de: ABC
+    dpt:
+      did: 8987
+      dname: AAA
+    mdata:
+      s1: 55
+      s2: 66
+      s3: 88
+    prjnm:
+    - P1
+    - P2
+    - P3
+spring:
+  application:
+    name: example2
