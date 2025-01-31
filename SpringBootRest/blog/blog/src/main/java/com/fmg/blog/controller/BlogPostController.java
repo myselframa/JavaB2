@@ -2,8 +2,11 @@ package com.fmg.blog.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,13 +14,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fmg.blog.dto.BlogPostDto;
+import com.fmg.blog.payloads.BlogPostResponse;
 import com.fmg.blog.service.BlogPostService;
+import com.fmg.blog.util.PaginationConstants;
 
 @RestController
 @RequestMapping("/api/posts")
+@CrossOrigin("*")
 public class BlogPostController {
 	
 	private BlogPostService blogPostService;
@@ -42,8 +49,24 @@ public class BlogPostController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<BlogPostDto> getAllBlogPost(){
-		List<BlogPostDto> allBlogPost = blogPostService.getAllBlogPost();
+	public ResponseEntity<BlogPostDto> getAllBlogPost(
+			@RequestParam (value="pageNo",defaultValue = PaginationConstants.PAGENUM,required = false)Integer pageNo,
+			@RequestParam(value="pageSize",defaultValue = "5",required = false) Integer pageSize,
+			@RequestParam(value="sortBy",defaultValue = "blogId",required = false)String sortBy,
+			@RequestParam(value="sortDir",defaultValue = "ASC",required = false)String sortDir
+			){
+		
+		
+		
+		Sort sort=sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())?Sort.by(sortBy).ascending()
+				:Sort.by(sortBy).descending();
+		PageRequest pagable=PageRequest.of(pageNo,pageSize,sort);
+		
+		
+		
+		List<BlogPostDto> allBlogPost = blogPostService.getAllBlogPost(pagable);
+		
+		
 		return new ResponseEntity(allBlogPost,HttpStatus.OK);
 	}
 	

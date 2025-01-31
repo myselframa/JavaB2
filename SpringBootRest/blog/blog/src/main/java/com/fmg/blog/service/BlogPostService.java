@@ -2,6 +2,8 @@ package com.fmg.blog.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.fmg.blog.dto.BlogPostDto;
 
 public interface BlogPostService {
@@ -10,7 +12,7 @@ public interface BlogPostService {
 	
 	BlogPostDto findByBlogPostId(Integer id);
 	
-	List<BlogPostDto> getAllBlogPost();
+	List<BlogPostDto> getAllBlogPost(Pageable page);
 	
 	BlogPostDto updateBlogPost(BlogPostDto blogpostdto);
 	

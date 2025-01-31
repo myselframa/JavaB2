@@ -1,15 +1,18 @@
 package com.fmg.blog.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.fmg.blog.dto.BlogPostDto;
 import com.fmg.blog.entites.BlogPost;
 import com.fmg.blog.exception.ResourceNotFoundException;
+import com.fmg.blog.payloads.BlogPostResponse;
 import com.fmg.blog.repo.BlogPostRepo;
 import com.fmg.blog.service.BlogPostService;
 @Service
@@ -62,16 +65,29 @@ public class BlogPostServiceImpl implements BlogPostService{
 
 
 
-	@Override
-	public List<BlogPostDto> getAllBlogPost() {
-		List<BlogPost> findAll = blogPostRepo.findAll();
+
+	public List<BlogPostDto> getAllBlogPost(Pageable page) {
+		
+		
+
+		Page<BlogPost> findAll = blogPostRepo.findAll(page);
 		/*
 		 * List<BlogPostDto> blohgpostdtos=new ArrayList<>(); for(BlogPost
 		 * blogPost:findAll) {
 		 * 
 		 * blohgpostdtos.add( mapEntityToDto(blogPost)); }
+		 * 
 		 */
-		return findAll.stream().map(blogPost->mapEntityToDto(blogPost)).toList();
+		
+		
+		
+		List<BlogPost> blogPosts = findAll.getContent();
+		 List<BlogPostDto> list = blogPosts.stream().map(blogPost->mapEntityToDto(blogPost)).toList();
+		 BlogPostResponse blogPostResponse=new BlogPostResponse();
+			blogPostResponse.setBlogPost(list);
+			blogPostResponse.setPageNo(page.getPageNumber());
+			blogPostResponse.setPageSize(page.getPageSize());
+			return list;
 	}
 
 

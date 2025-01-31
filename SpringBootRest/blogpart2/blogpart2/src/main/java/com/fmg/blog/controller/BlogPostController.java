@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fmg.blog.dto.BlogPostDto;
 import com.fmg.blog.service.BlogPostService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/posts")
 public class BlogPostController {
@@ -28,7 +30,7 @@ public class BlogPostController {
 	}
 
 	@PostMapping
-	public ResponseEntity<BlogPostDto> createBlog(@RequestBody BlogPostDto bloppost){
+	public ResponseEntity<BlogPostDto> createBlog(@Valid @RequestBody BlogPostDto bloppost){
 		
 		BlogPostDto createblogPost = blogPostService.createblogPost(bloppost);
 		
@@ -36,7 +38,7 @@ public class BlogPostController {
 	}
 	
 	@GetMapping("/{postId}")
-	public ResponseEntity<BlogPostDto> findBlogPostById(@PathVariable("postId") Integer id){
+	public ResponseEntity<BlogPostDto> findBlogPostById(@PathVariable("postId") Long id){
 		BlogPostDto findByBlogPostId = blogPostService.findByBlogPostId(id);
 		return new ResponseEntity(findByBlogPostId,HttpStatus.OK); 
 	}
@@ -48,14 +50,14 @@ public class BlogPostController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<BlogPostDto> updateBlogPost(@RequestBody BlogPostDto bloppostdto){
+	public ResponseEntity<BlogPostDto> updateBlogPost(@Valid @RequestBody BlogPostDto bloppostdto){
 		BlogPostDto updateBlogPost = blogPostService.updateBlogPost(bloppostdto);
 		return new ResponseEntity(updateBlogPost,HttpStatus.OK);
 	}
 	
 	// delete post rest api
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePost(@PathVariable(name = "id") Integer id){
+    public ResponseEntity<String> deletePost(@PathVariable(name = "id") Long id){
 
     	blogPostService.deletePostById(id);
 
